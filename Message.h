@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Message.h
  * Author: gydo194
  *
@@ -19,17 +19,28 @@
 #include <cstdint>
 
 
-class Message {
+class Message
+{
 public:
     Message();
     Message(const Message& orig);
     virtual ~Message();
-    
+
+    //message header data members
+    uint16_t messageType = 0;
+    uint16_t messageSource = 0;
+    uint16_t messageDestination = 0;
+    //message body
+    char *messageBody;
+
+
+
     void setMessageType(int type);
     void setMessageBody(char *body);
     uint16_t getMessageType();
     char *getMessageBody();
-    
+
+    //TODO: either remove getter/setter functions or move to cpp
     uint16_t getMessageDestination() const {
         return messageDestination;
     }
@@ -54,15 +65,14 @@ public:
         this->messageType = messageType;
     }
 
-    
+
     void printDetails();
+
+
+
 private:
-    uint16_t messageType = 0;
-    uint16_t messageSource = 0;
-    uint16_t messageDestination = 0;
-    char *messageBody;
-    
+
+
 };
 
 #endif /* MESSAGE_H */
-

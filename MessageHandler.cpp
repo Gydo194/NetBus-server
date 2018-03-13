@@ -15,6 +15,7 @@
 
 #include "MessageHandler.h"
 #include "ClientHandler.h"
+#include "ProtocolHandler.h"
 #include "Server.h"
 
 extern Server s; //forward declaration of extern Server s from Globals.h
@@ -35,6 +36,7 @@ void MessageHandler::handle(Message *msg, uint16_t fd) {
     msg->printDetails();
     
     uint16_t cfd;
+    Message test;
     switch (msg->getMessageType()) {
         case 0:
             //type 0: HELLO
@@ -52,7 +54,9 @@ void MessageHandler::handle(Message *msg, uint16_t fd) {
             //type 2: SEND
             std::cout << "MessageHandler::handle(): got message type 2 (SEND)\n";
             printf("MessageHandler::handler(): resolved fd for client '%hu' = '%hu'.\n",msg->getMessageDestination(),ClientHandler::getClientFd(msg->getMessageDestination()));
-            s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),msg->getMessageBody());
+            
+            s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),ProtocolHandler::getHeadersForMessage(msg)); //send headers
+            s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),msg->messageBody); //send message body
             break;
         case 3:
             std::cout << "MessageHandler::handle(): got message type 3 (SERVCMD)\n";
@@ -60,6 +64,13 @@ void MessageHandler::handle(Message *msg, uint16_t fd) {
             break;
         case 4:
             std::cout << "MessageHandler::handle(): got message type 4 (DBG)\n";
+            //Message test;
+            test.messageType = 2;
+            test.messageSource = 1;
+            test.messageDestination = 2;
+            test.messageBody = "testMessage";
+            
+            printf("Message Header Generation test: '%s'.\n",ProtocolHandler::getHeadersForMessage(&test));
             break;
         default:
             std::cout << "MessageHandler::handle(): got unknown message type " << msg->getMessageType() << " .\n";

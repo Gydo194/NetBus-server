@@ -34,24 +34,36 @@
 #define MSG_BODY_START 3
 #define MSG_BODY_END 30
 
+#define MSG_HEADER_SIZE (MSG_TYPE_HEADER_SIZE + MSG_SRC_HEADER_SIZE + MSG_DEST_HEADER_SIZE + MSG_BODY_BUFFER_SIZE)
+//#define MSG_HEADER_SIZE 33
+
 
 class ProtocolHandler {
 public:
     ProtocolHandler();
     ProtocolHandler(const ProtocolHandler& orig);
     virtual ~ProtocolHandler();
+    //getters for parsed data
     uint16_t getMessageType();    
     uint16_t getMessageSource();
     uint16_t getMessageDestination();
     char *getMessageBody();
     
+    //parsing functions
     void parseMessage();
     
+    //data manipulation
     void setInput(char *input);
     void getInput();
     
-    Message getMessage();
-    void setMessageParams(Message *msg);
+    //data retrieval
+    Message getMessage(); //returns a Message object
+    void setMessageParams(Message *msg); //sets cvars of Message object instance pointed to by msg
+    
+    static char *getHeadersForMessage(Message *msg); //returns headers for message pointed to by msg
+    
+    
+    
 private:
     char *rawInput;
     uint16_t messageType;

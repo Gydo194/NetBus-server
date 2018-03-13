@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   ProtocolHandler.cpp
  * Author: gydo194
- * 
+ *
  * Created on March 7, 2018, 9:22 PM
  */
 
@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+
 
 #include "ProtocolHandler.h"
 
@@ -27,7 +28,8 @@
  */
 
 
-ProtocolHandler::ProtocolHandler() {
+ProtocolHandler::ProtocolHandler()
+{
     //allocate memory for strings
     typeHeader = (char *) malloc((sizeof (char)) * (MSG_TYPE_HEADER_SIZE + 1));
     messageBody = (char*) malloc((sizeof (char)) * (MSG_BODY_BUFFER_SIZE + 1));
@@ -35,10 +37,12 @@ ProtocolHandler::ProtocolHandler() {
     destHeader = (char*) malloc((sizeof (char))*(MSG_DEST_HEADER_SIZE + 1));
 }
 
-ProtocolHandler::ProtocolHandler(const ProtocolHandler& orig) {
+ProtocolHandler::ProtocolHandler(const ProtocolHandler& orig)
+{
 }
 
-ProtocolHandler::~ProtocolHandler() {
+ProtocolHandler::~ProtocolHandler()
+{
     std::cout << "Destroying Protocol Handler...\n";
     free(typeHeader);
     free(messageBody);
@@ -46,50 +50,59 @@ ProtocolHandler::~ProtocolHandler() {
     free(destHeader);
 }
 
-void ProtocolHandler::parseMessageType() {
+void ProtocolHandler::parseMessageType()
+{
     bzero(typeHeader, MSG_TYPE_HEADER_SIZE);
     strncpy(typeHeader, rawInput + MSG_TYPE_HEADER_START, MSG_TYPE_HEADER_END - MSG_TYPE_HEADER_START);
     //No need to add NULL pointer now, as we initialized the array to NULL bytes using bzero()
     messageType = atoi(typeHeader);
 }
 
-void ProtocolHandler::setInput(char* input) {
+void ProtocolHandler::setInput(char* input)
+{
     ProtocolHandler::rawInput = input;
 }
 
-void ProtocolHandler::parseMessageBody() {
+void ProtocolHandler::parseMessageBody()
+{
     bzero(messageBody, MSG_BODY_BUFFER_SIZE);
     strncpy(messageBody, rawInput + MSG_BODY_START, MSG_BODY_BUFFER_SIZE - MSG_BODY_START);
 }
 
-void ProtocolHandler::parseMessageSource() {
+void ProtocolHandler::parseMessageSource()
+{
     bzero(srcHeader, MSG_SRC_HEADER_SIZE);
     strncpy(srcHeader, rawInput + MSG_SRC_HEADER_START, MSG_SRC_HEADER_END - MSG_SRC_HEADER_START);
     messageSource = atoi(srcHeader);
 }
 
-void ProtocolHandler::parseMessageDestination() {
+void ProtocolHandler::parseMessageDestination()
+{
     bzero(destHeader, MSG_DEST_HEADER_SIZE);
     strncpy(destHeader, rawInput + MSG_DEST_HEADER_START, MSG_DEST_HEADER_END - MSG_DEST_HEADER_START);
     messageDestination = atoi(destHeader);
 }
 
-uint16_t ProtocolHandler::getMessageType() {
+uint16_t ProtocolHandler::getMessageType()
+{
     return messageType;
 }
 
-char *ProtocolHandler::getMessageBody() {
+char *ProtocolHandler::getMessageBody()
+{
     return messageBody;
 }
 
-void ProtocolHandler::parseMessage() {
+void ProtocolHandler::parseMessage()
+{
     parseMessageType();
     parseMessageSource();
     parseMessageDestination();
     parseMessageBody();
 }
 
-Message ProtocolHandler::getMessage() {
+Message ProtocolHandler::getMessage()
+{
     Message msg;
     msg.setMessageType(messageType);
     msg.setMessageSource(messageSource);
@@ -98,10 +111,24 @@ Message ProtocolHandler::getMessage() {
     return msg;
 }
 
-void ProtocolHandler::setMessageParams(Message *msg) {
+void ProtocolHandler::setMessageParams(Message *msg)
+{
     msg->setMessageType(messageType);
     msg->setMessageSource(messageSource);
     msg->setMessageDestination(messageDestination);
     msg->setMessageBody(messageBody);
 }
 
+char *ProtocolHandler::getHeadersForMessage(Message *msg)
+{
+
+    //char tempHeader[MSG_HEADER_SIZE] = {0};
+
+    char *tempHeader = (char*) malloc(sizeof(char)*MSG_HEADER_SIZE);
+    bzero(tempHeader,sizeof(char)*MSG_HEADER_SIZE);
+    sprintf((tempHeader + MSG_TYPE_HEADER_START),"%d",msg->messageType);
+    sprintf((tempHeader + MSG_SRC_HEADER_START),"%d",msg->messageSource);
+    sprintf((tempHeader + MSG_DEST_HEADER_START),"%d",msg->messageDestination);
+    return tempHeader;
+
+}

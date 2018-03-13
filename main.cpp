@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     signal(SIGINT,globalSignalHandler);
     signal(SIGABRT,globalSignalHandler);
     signal(SIGQUIT,globalSignalHandler);
-    cout << "[NETBUS] [BOOTSTRAP] Binding Server API callback function pointers..." << endl;
+    cout << "[NETBUS] [BOOTSTRAP] Binding Server callback function pointers..." << endl;
     s.setNewConnectionCallback(&ServerCallbackHandlerService::processNewConnection);
     s.setReceiveCallBack(&ServerCallbackHandlerService::processNewInput);
     s.setDisconnectCallback(&ServerCallbackHandlerService::processDisconnect);

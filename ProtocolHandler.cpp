@@ -121,14 +121,10 @@ void ProtocolHandler::setMessageParams(Message *msg)
 
 char *ProtocolHandler::getHeadersForMessage(Message *msg)
 {
-
-    //char tempHeader[MSG_HEADER_SIZE] = {0};
-
     char *tempHeader = (char*) malloc(sizeof(char)*MSG_HEADER_SIZE);
     bzero(tempHeader,sizeof(char)*MSG_HEADER_SIZE);
     sprintf((tempHeader + MSG_TYPE_HEADER_START),"%d",msg->messageType);
     sprintf((tempHeader + MSG_SRC_HEADER_START),"%d",msg->messageSource);
     sprintf((tempHeader + MSG_DEST_HEADER_START),"%d",msg->messageDestination);
     return tempHeader;
-
 }

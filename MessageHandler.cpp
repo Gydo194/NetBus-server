@@ -36,44 +36,37 @@ void MessageHandler::handle(Message *msg, uint16_t fd) {
     msg->printDetails();
     
     uint16_t cfd;
-    Message test;
     switch (msg->getMessageType()) {
         case 0:
             //type 0: HELLO
-            std::cout << "MessageHandler::handle(): got message type 0 (HELLO)\n";
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got message type 0 (HELLO)\n";
             ClientHandler::setClientFd(msg->getMessageSource(), fd);
             break;
         case 1:
             //type 1: BYE
-            std::cout << "MessageHandler::handle(): got message type 1 (BYE)\n";
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got message type 1 (BYE)\n";
             cfd = ClientHandler::getClientFd(msg->getMessageSource());
-            printf("MessageHandler: resolved client src '%hu' to fd '%hu' for remove.\n",msg->getMessageSource(),cfd);
+            printf("[MESSAGEHANDLER] MessageHandler: resolved client src '%hu' to fd '%hu' for remove.\n",msg->getMessageSource(),cfd);
             ClientHandler::removeClient(msg->getMessageSource());
             break;
         case 2:
             //type 2: SEND
-            std::cout << "MessageHandler::handle(): got message type 2 (SEND)\n";
-            printf("MessageHandler::handler(): resolved fd for client '%hu' = '%hu'.\n",msg->getMessageDestination(),ClientHandler::getClientFd(msg->getMessageDestination()));
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got message type 2 (SEND)\n";
+            printf("[MESSAGEHANDLER] MessageHandler::handle(): resolved fd for client '%hu' = '%hu'.\n",msg->getMessageDestination(),ClientHandler::getClientFd(msg->getMessageDestination()));
             
-            s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),ProtocolHandler::getHeadersForMessage(msg)); //send headers
+            s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),ProtocolHandler::getHeadersForMessage(msg)); //send headers WARN: free?
             s.sendTo(ClientHandler::getClientFd(msg->getMessageDestination()),msg->messageBody); //send message body
             break;
         case 3:
-            std::cout << "MessageHandler::handle(): got message type 3 (SERVCMD)\n";
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got message type 3 (SERVCMD)\n";
             exit(EXIT_SUCCESS);
             break;
         case 4:
-            std::cout << "MessageHandler::handle(): got message type 4 (DBG)\n";
-            //Message test;
-            test.messageType = 2;
-            test.messageSource = 1;
-            test.messageDestination = 2;
-            test.messageBody = "testMessage";
-            
-            printf("Message Header Generation test: '%s'.\n",ProtocolHandler::getHeadersForMessage(&test));
+            //reserved message type for unit tests
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got message type 4 (DBG)\n";
             break;
         default:
-            std::cout << "MessageHandler::handle(): got unknown message type " << msg->getMessageType() << " .\n";
+            std::cout << "[MESSAGEHANDLER] MessageHandler::handle(): got unknown message type " << msg->getMessageType() << " .\n";
             break;
     }
 }

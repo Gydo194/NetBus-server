@@ -27,21 +27,17 @@ ServerCallbackHandlerService::~ServerCallbackHandlerService() {
 }
 
 void ServerCallbackHandlerService::processNewConnection(uint16_t fd) {
-    std::cout << "ServerCallbackHandlerService::processNewConnection called.\n";
+    std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processNewConnection called.\n";
 }
 
 void ServerCallbackHandlerService::processDisconnect(uint16_t fd) {
-    std::cout << "ServerCallbackHandlerService::processDisconnect() called w/fd " << fd << ".\n";
-    //    printf("ServerCallbackHandlerService called with fd '%hu'.\n",fd);
-    //    //remove client with FD fd from clients
-    //    uint16_t cfd = ClientHandler::getClientFd(fd);
-    //    printf("ServerCallbackHandlerService::processDisconnect(): resolved client for fd '%hu' = '%hu'");
-    //    ClientHandler::removeClient(ClientHandler::getClientFd(fd));
+    std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processDisconnect() called w/fd " << fd << ".\n";
+    //remove fd from clients
 }
 
 void ServerCallbackHandlerService::processNewInput(uint16_t fd, char* buffer) {
-    std::cout << "ServerCallbackHandllerService::processNewInput() called\n";
-    printf("ServerCallbackHandlerService::processNewInput(): fd = '%hu' raw input = '%s'.\n", fd, buffer);
+    std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandllerService::processNewInput() called\n";
+    printf("[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processNewInput(): fd = '%hu' raw input = '%s'.\n", fd, buffer);
     ph.setInput(buffer);
     ph.parseMessage();
     Message msg;

@@ -17,6 +17,8 @@
 #include "Message.h"
 
 
+#define PROTOCOLHANDLER_TEMPBUFFER_SIZE 3
+
 #define MSG_TYPE_HEADER_START 0 //type header start byte
 #define MSG_TYPE_HEADER_END 1 //type header end byte, including the null terminator
 #define MSG_TYPE_HEADER_SIZE 1 //type header buffer size in bytes (min: total size from start to end)
@@ -69,9 +71,12 @@ private:
     uint16_t messageSource;
     uint16_t messageDestination;
     char *messageBody;
-    char *typeHeader;
-    char *srcHeader;
-    char *destHeader;
+    //char *typeHeader;//unneccesary
+    //char *srcHeader; //same
+    //char *destHeader; //also
+    
+    char *tempBuffer;
+    
     void parseMessageType();
     void parseMessageSource();
     void parseMessageDestination();

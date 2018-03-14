@@ -31,10 +31,11 @@
 ProtocolHandler::ProtocolHandler()
 {
     //allocate memory for strings
-    typeHeader = (char *) malloc((sizeof (char)) * (MSG_TYPE_HEADER_SIZE + 1));
+    //typeHeader = (char *) malloc((sizeof (char)) * (MSG_TYPE_HEADER_SIZE + 1));
     messageBody = (char*) malloc((sizeof (char)) * (MSG_BODY_BUFFER_SIZE + 1));
-    srcHeader = (char*) malloc((sizeof (char))*(MSG_SRC_HEADER_SIZE + 1));
-    destHeader = (char*) malloc((sizeof (char))*(MSG_DEST_HEADER_SIZE + 1));
+    //srcHeader = (char*) malloc((sizeof (char))*(MSG_SRC_HEADER_SIZE + 1));
+    //destHeader = (char*) malloc((sizeof (char))*(MSG_DEST_HEADER_SIZE + 1));
+    tempBuffer = (char*) malloc(sizeof(char)*PROTOCOLHANDLER_TEMPBUFFER_SIZE);
 }
 
 ProtocolHandler::ProtocolHandler(const ProtocolHandler& orig)
@@ -44,18 +45,19 @@ ProtocolHandler::ProtocolHandler(const ProtocolHandler& orig)
 ProtocolHandler::~ProtocolHandler()
 {
     std::cout << "Destroying Protocol Handler...\n";
-    free(typeHeader);
+    //free(typeHeader);
     free(messageBody);
-    free(srcHeader);
-    free(destHeader);
+    //free(srcHeader);
+    //free(destHeader);
+    free(tempBuffer);
 }
 
 void ProtocolHandler::parseMessageType()
 {
-    bzero(typeHeader, MSG_TYPE_HEADER_SIZE);
-    strncpy(typeHeader, rawInput + MSG_TYPE_HEADER_START, MSG_TYPE_HEADER_END - MSG_TYPE_HEADER_START);
+    bzero(tempBuffer, MSG_TYPE_HEADER_SIZE);
+    strncpy(tempBuffer, rawInput + MSG_TYPE_HEADER_START, MSG_TYPE_HEADER_END - MSG_TYPE_HEADER_START);
     //No need to add NULL pointer now, as we initialized the array to NULL bytes using bzero()
-    messageType = atoi(typeHeader);
+    messageType = atoi(tempBuffer);
 }
 
 void ProtocolHandler::setInput(char* input)
@@ -71,16 +73,16 @@ void ProtocolHandler::parseMessageBody()
 
 void ProtocolHandler::parseMessageSource()
 {
-    bzero(srcHeader, MSG_SRC_HEADER_SIZE);
-    strncpy(srcHeader, rawInput + MSG_SRC_HEADER_START, MSG_SRC_HEADER_END - MSG_SRC_HEADER_START);
-    messageSource = atoi(srcHeader);
+    bzero(tempBuffer, MSG_SRC_HEADER_SIZE);
+    strncpy(tempBuffer, rawInput + MSG_SRC_HEADER_START, MSG_SRC_HEADER_END - MSG_SRC_HEADER_START);
+    messageSource = atoi(tempBuffer);
 }
 
 void ProtocolHandler::parseMessageDestination()
 {
-    bzero(destHeader, MSG_DEST_HEADER_SIZE);
-    strncpy(destHeader, rawInput + MSG_DEST_HEADER_START, MSG_DEST_HEADER_END - MSG_DEST_HEADER_START);
-    messageDestination = atoi(destHeader);
+    bzero(tempBuffer, MSG_DEST_HEADER_SIZE);
+    strncpy(tempBuffer, rawInput + MSG_DEST_HEADER_START, MSG_DEST_HEADER_END - MSG_DEST_HEADER_START);
+    messageDestination = atoi(tempBuffer);
 }
 
 uint16_t ProtocolHandler::getMessageType()

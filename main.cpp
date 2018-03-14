@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     cout << "[NETBUS] [BOOTSTRAP] Starting Server..." << endl;
     s.run();
 
-    //will never get past this point
+    //should never get past this point
     cout << "[NETBUS] [ERROR] Illegal State detected (End of Main)" << endl;
     return 0;
 }

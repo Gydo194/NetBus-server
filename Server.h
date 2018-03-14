@@ -41,7 +41,7 @@ public:
     void setNewConnectionCallback(void (*ncc)(uint16_t fd));
     void setReceiveCallBack(void (*rc)(uint16_t fd, char *buffer));
     void setDisconnectCallback(void (*dc)(uint16_t fd));
-    void sendTo(uint16_t fd, char *messageBuffer);
+    void sendTo(uint16_t fd, void *messageBuffer);
 private:
     //fd_set file descriptor sets for use with FD_ macros
     fd_set masterfds;

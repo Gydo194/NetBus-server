@@ -180,9 +180,10 @@ void Server::setDisconnectCallback(void(*dc)(uint16_t)) {
 
 
 
-void Server::sendTo(uint16_t fd, char* messageBuffer) {
-    int nbsent = send(fd,messageBuffer,strlen(messageBuffer),0);
+void Server::sendTo(uint16_t fd, void* messageBuffer) {
+    int nbsent = send(fd,messageBuffer,sizeof(messageBuffer),0);
     std::cout << "[SERVER] [SEND] Sent " << nbsent << " bytes to client with fd " << fd << "." << std::endl;
+    //delete(&nbsent);
     //printf("[SERVER] [SEND-UNSTABLE] Server::sendTo(): sent '%d' bytes to client fd '%hu'.\n",send(fd,messageBuffer,strlen(messageBuffer),0),fd);
 }
 

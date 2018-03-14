@@ -37,7 +37,6 @@
 #define MSG_HEADER_SIZE (MSG_TYPE_HEADER_SIZE + MSG_SRC_HEADER_SIZE + MSG_DEST_HEADER_SIZE + MSG_BODY_BUFFER_SIZE)
 //#define MSG_HEADER_SIZE 33
 
-
 class ProtocolHandler {
 public:
     ProtocolHandler();

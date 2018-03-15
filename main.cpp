@@ -6,10 +6,6 @@
  */
 
 #include "Server.h"
-#include "Message.h"
-#include "ProtocolHandler.h"
-#include "ClientHandler.h"
-#include "MessageHandler.h"
 #include "ServerCallbackHandlerService.h"
 #include "Commons.h" //global extern variables
 #include "SignalHandlers.h"

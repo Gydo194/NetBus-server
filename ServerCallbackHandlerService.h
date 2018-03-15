@@ -16,8 +16,6 @@
 
 #include <cstdint>
 
-#include "ProtocolHandler.h"
-
 class ServerCallbackHandlerService {
     
 public:
@@ -28,7 +26,7 @@ public:
     static void processNewInput(uint16_t fd, char *buffer);
     static void processDisconnect(uint16_t fd);
 private:
-    static ProtocolHandler ph;
+
 
 
 };

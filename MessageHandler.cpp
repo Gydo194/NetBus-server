@@ -20,6 +20,7 @@
 
 extern Server s; //forward declaration of extern Server s from Globals.h
 
+
 MessageHandler::MessageHandler() {
 }
 

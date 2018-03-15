@@ -18,25 +18,28 @@
 
 
 #define PROTOCOLHANDLER_TEMPBUFFER_SIZE 3
+#define MSG_HEADER_START 0
+#define MSG_HEADER_LEN 3
 
 #define MSG_TYPE_HEADER_START 0 //type header start byte
-#define MSG_TYPE_HEADER_END 1 //type header end byte, including the null terminator
+#define MSG_TYPE_HEADER_LEN 1 //type header end byte, including the null terminator
 #define MSG_TYPE_HEADER_SIZE 1 //type header buffer size in bytes (min: total size from start to end)
 
 #define MSG_SRC_HEADER_START 1
-#define MSG_SRC_HEADER_END 2
+#define MSG_SRC_HEADER_LEN 1
 #define MSG_SRC_HEADER_SIZE 1
 
 #define MSG_DEST_HEADER_START 2
-#define MSG_DEST_HEADER_END 3
+#define MSG_DEST_HEADER_LEN 1
 #define MSG_DEST_HEADER_SIZE 1
 
 
 #define MSG_BODY_BUFFER_SIZE 30 //message body max size
 #define MSG_BODY_START 3
 #define MSG_BODY_END 30
+#define MSG_BODY_LEN 27 //strncpy len
 
-#define MSG_HEADER_SIZE (MSG_TYPE_HEADER_SIZE + MSG_SRC_HEADER_SIZE + MSG_DEST_HEADER_SIZE + MSG_BODY_BUFFER_SIZE)
+#define MSG_HEADER_SIZE 3
 //#define MSG_HEADER_SIZE 33
 
 class ProtocolHandler {
@@ -76,11 +79,11 @@ private:
     //char *destHeader; //also
     
     char *tempBuffer;
+    char *headerBuffer;
     
     void parseMessageType();
     void parseMessageSource();
     void parseMessageDestination();
-    void parseMessageBody();
     
 
 };

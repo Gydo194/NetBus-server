@@ -14,6 +14,7 @@
 #include "ServerCallbackHandlerService.h"
 #include "MessageHandler.h"
 #include "ClientHandler.h"
+#include "Commons.h"
 
 ProtocolHandler ServerCallbackHandlerService::ph;
 

@@ -51,8 +51,8 @@ private:
     uint16_t maxfd;
     
     //socket file descriptors
-    int mastersocket_fd;
-    int tempsocket_fd;
+    int mastersocket_fd; //master socket which receives new connections
+    int tempsocket_fd; //temporary socket file descriptor which holds new clients
     
     //client connection data
     struct sockaddr_storage client_addr;

@@ -122,8 +122,9 @@ void Server::recvInputFromExisting(int fd) {
     //add NULL terminator
     printf("[SERVER] [RECV] Received '%s' from client!\n", input_buffer);
     //call handler function
+    //call this callback last so it doesn't matter (at least for the server) if the callback is destructive on the string
     receiveCallback(fd,input_buffer);
-    memset(&input_buffer, 0, INPUT_BUFFER_SIZE); //zero buffer
+    memset(&input_buffer, 0, INPUT_BUFFER_SIZE); //zero buffer //bzero
 }
 
 void Server::run() {

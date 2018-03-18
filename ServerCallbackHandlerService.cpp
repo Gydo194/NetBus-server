@@ -12,9 +12,10 @@
  */
 #include <iostream>
 #include "ServerCallbackHandlerService.h"
+#include "ProtocolHandler.h"
 #include "Commons.h"
 
-
+ProtocolHandler ph;
 ServerCallbackHandlerService::ServerCallbackHandlerService() {
 }
 
@@ -36,4 +37,6 @@ void ServerCallbackHandlerService::processDisconnect(uint16_t fd) {
 void ServerCallbackHandlerService::processNewInput(uint16_t fd, char* buffer) {
     std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandllerService::processNewInput() called\n";
     printf("[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processNewInput(): fd = '%hu' raw input = '%s'.\n", fd, buffer);
+    ph.processInput(buffer);
+    
 }

@@ -28,6 +28,7 @@ void ProtocolHandler::processInput(char *input)
         processChar(*(input+i));
     }
     append();
+    resetState();
     
 }
 
@@ -35,11 +36,13 @@ void ProtocolHandler::processChar(char in)
 {
    //cout << "running char handler\n";
     switch(in) {
-    case '&':
-        state = KEY; //reset to reading into KEY buffer
+    case '&': //defined constants!!
+        cout << "switching to enum state KEY\n";
         append();
+        resetState();
         break;
     case '=':
+        cout << "switching to enum state VALUE\n";
         state = VALUE; //read into VALUE buffer from now
         break;
     default:
@@ -70,7 +73,12 @@ void ProtocolHandler::append()
     cout << "STORING '" << keyBuffer << "' w/val '" << valueBuffer << "'.\n";
     //store data
     values.insert(std::pair<string,string>(keyBuffer,valueBuffer));
-    //clear buffers
+
+}
+
+void ProtocolHandler::resetState() {
+        //clear buffers
     keyBuffer.clear();
     valueBuffer.clear();
+    state = KEY; //reset back to initial state to read in to key buffer
 }

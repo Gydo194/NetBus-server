@@ -22,6 +22,7 @@ private:
     void processChar(char in);
     void processNewChar(char in);
     void append();
+    void resetState();
     string keyBuffer;
     string valueBuffer;
     map<string,string> values;

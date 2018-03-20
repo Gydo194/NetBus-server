@@ -18,6 +18,7 @@ public:
     ProtocolHandler();
     ~ProtocolHandler();
     void processInput(char *input);
+    map<string,string> values;
 private:
     void processChar(char in);
     void processNewChar(char in);
@@ -25,7 +26,6 @@ private:
     void resetState();
     string keyBuffer;
     string valueBuffer;
-    map<string,string> values;
     enum states { KEY,VALUE } state;
 };
 

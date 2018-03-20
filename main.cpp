@@ -9,6 +9,8 @@
 #include "ServerCallbackHandlerService.h"
 #include "Commons.h" //global extern variables
 #include "SignalHandlers.h"
+#include "MessageHandler.h"
+#include "Actions.h"
 
 #include <iostream>
 #include <csignal>
@@ -27,6 +29,12 @@ int main(int argc, char** argv)
     s.setNewConnectionCallback(&ServerCallbackHandlerService::processNewConnection);
     s.setReceiveCallBack(&ServerCallbackHandlerService::processNewInput);
     s.setDisconnectCallback(&ServerCallbackHandlerService::processDisconnect);
+    
+    
+    cout << "[NETBUS] [BOOTSTRAP] Binding Action callbacks...\n";
+    MessageHandler::addCallBack("test",(MessageHandler::ActionCallBack) &testAction);
+    
+    
     cout << "[NETBUS] [BOOTSTRAP] Initializing Sockets..." << endl;
     s.init();
     cout << "[NETBUS] [BOOTSTRAP] Starting Server..." << endl;

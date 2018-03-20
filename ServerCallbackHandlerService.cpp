@@ -13,6 +13,8 @@
 #include <iostream>
 #include "ServerCallbackHandlerService.h"
 #include "ProtocolHandler.h"
+#include "Message.h"
+#include "MessageHandler.h"
 #include "Commons.h"
 
 ProtocolHandler ph;
@@ -38,5 +40,7 @@ void ServerCallbackHandlerService::processNewInput(uint16_t fd, char* buffer) {
     std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandllerService::processNewInput() called\n";
     printf("[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processNewInput(): fd = '%hu' raw input = '%s'.\n", fd, buffer);
     ph.processInput(buffer);
-    
+    Message msg;
+    msg.params = ph.values;
+    MessageHandler::handle(&msg); //call Message Handler to handle the message based on stored params in map
 }

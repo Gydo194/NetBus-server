@@ -18,8 +18,8 @@ void ProtocolHandler::processInput(char *input)
 {
     cout << "[PROTOCOLHANDLER] processInput called\n";
 
-
-
+    //maybe use strpbrk() to get a pointer to the char, then strcpy / append original pointer to new pointer into correct buffer;
+    //set original pointer to new pointer + 1 (exclude = / & chars)
 
     
     //print every character of string
@@ -34,14 +34,13 @@ void ProtocolHandler::processInput(char *input)
 
 void ProtocolHandler::processChar(char in)
 {
-   //cout << "running char handler\n";
     switch(in) {
-    case '&': //defined constants!!
+    case PH_PAIR_DELIMITER:
         cout << "switching to enum state KEY\n";
         append();
         resetState();
         break;
-    case '=':
+    case PH_VALUE_DELIMITER:
         cout << "switching to enum state VALUE\n";
         state = VALUE; //read into VALUE buffer from now
         break;
@@ -50,6 +49,7 @@ void ProtocolHandler::processChar(char in)
         break;
     }
 }
+
 
 void ProtocolHandler::processNewChar(char in)
 {
@@ -64,7 +64,6 @@ void ProtocolHandler::processNewChar(char in)
         //valueBuffer.append(in,1);
         valueBuffer += in;
         break;
-
     }
 }
 

@@ -4,7 +4,7 @@
 #include <map>
 #include "Message.h"
 
-#define MSGHANDLER_ACTION_PARAM_NAME "test"
+#define MSGHANDLER_ACTION_PARAM_NAME "action"
 
 using namespace std;
 

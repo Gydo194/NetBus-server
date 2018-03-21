@@ -1,6 +1,7 @@
 #include "MessageHandler.h"
 #include <map>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -42,7 +43,10 @@ void MessageHandler::handle(Message *msg)
     //string
     //callCallback("derp",msg);
     try {
-        callCallback(msg->params.at(MSGHANDLER_ACTION_PARAM_NAME),msg);
+        //callCallback(msg->params.at(MSGHANDLER_ACTION_PARAM_NAME),msg);
+        string cbId = msg->params.at(MSGHANDLER_ACTION_PARAM_NAME);
+        cout << "[MESSAGEHANDLER] [CALLBACK] Callback name = '" << cbId << "'" << endl;
+        callCallback(cbId,msg);
     } catch(out_of_range e) {
         cout << "[MESSAGEHANDLER] [HANDLE] Caught out of range! cannot request action param (is it given?)\n";
     }

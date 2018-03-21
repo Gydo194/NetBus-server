@@ -21,7 +21,7 @@ void ProtocolHandler::processInput(char *input)
     //maybe use strpbrk() to get a pointer to the char, then strcpy / append original pointer to new pointer into correct buffer;
     //set original pointer to new pointer + 1 (exclude = / & chars)
 
-    
+
     //print every character of string
     for(size_t i = 0; i < strlen(input); i++) {
         //printf("CHAR: '%c'\n",*(input+i));
@@ -29,7 +29,7 @@ void ProtocolHandler::processInput(char *input)
     }
     append();
     resetState();
-    
+
 }
 
 void ProtocolHandler::processChar(char in)
@@ -43,6 +43,10 @@ void ProtocolHandler::processChar(char in)
     case PH_VALUE_DELIMITER:
         cout << "switching to enum state VALUE\n";
         state = VALUE; //read into VALUE buffer from now
+        break;
+    case '\n':
+        //temporary solution to throw out new line characters
+        cout << "Skipping newline\n";
         break;
     default:
         processNewChar(in); //read input char into correct buffer
@@ -75,8 +79,9 @@ void ProtocolHandler::append()
 
 }
 
-void ProtocolHandler::resetState() {
-        //clear buffers
+void ProtocolHandler::resetState()
+{
+    //clear buffers
     keyBuffer.clear();
     valueBuffer.clear();
     state = KEY; //reset back to initial state to read in to key buffer

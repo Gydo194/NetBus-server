@@ -33,6 +33,7 @@ int main(int argc, char** argv)
     
     cout << "[NETBUS] [BOOTSTRAP] Binding Action callbacks...\n";
     MessageHandler::addCallBack("test",(MessageHandler::ActionCallBack) &testAction);
+    MessageHandler::addCallBack("dump",(MessageHandler::ActionCallBack) &dumpMessageParams);
     
     
     cout << "[NETBUS] [BOOTSTRAP] Initializing Sockets..." << endl;

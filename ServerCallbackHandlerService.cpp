@@ -39,8 +39,9 @@ void ServerCallbackHandlerService::processDisconnect(uint16_t fd) {
 void ServerCallbackHandlerService::processNewInput(uint16_t fd, char* buffer) {
     std::cout << "[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandllerService::processNewInput() called\n";
     printf("[SERVERCALLBACKHANDLERSERVICE] ServerCallbackHandlerService::processNewInput(): fd = '%hu' raw input = '%s'.\n", fd, buffer);
-    ph.processInput(buffer);
-    Message msg;
-    msg.params = ph.values;
+    ph.processInput(buffer); //process received input
+    Message msg; //build a Message object for processing
+    msg.params = ph.values; //set it's parameter map to the processed input value map
+    ph.values.clear(); //reset value map
     MessageHandler::handle(&msg); //call Message Handler to handle the message based on stored params in map
 }

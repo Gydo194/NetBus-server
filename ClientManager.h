@@ -1,6 +1,8 @@
 #ifndef CLIENTMANAGER_H
 #define CLIENTMANAGER_H
 
+
+#include "Client.h"
 #include <map>
 #include <cstring>
 
@@ -11,7 +13,9 @@ class ClientManager
 public:
     ClientManager();
     ~ClientManager();
-    map<string,uint16_t> clients;
+    static map<string,Client> clients;
+    static void registerClient(string id, Client c);
+    //static void removeClient
 
 };
 

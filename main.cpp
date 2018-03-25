@@ -16,6 +16,7 @@
 #include <csignal>
 
 using namespace std;
+using namespace Actions;
 
 Server s; //forward declaration of Server s from Commons.h
 int main(int argc, char** argv)
@@ -25,17 +26,19 @@ int main(int argc, char** argv)
     signal(SIGINT,globalSignalHandler);
     signal(SIGABRT,globalSignalHandler);
     signal(SIGQUIT,globalSignalHandler);
+
+
     cout << "[NETBUS] [BOOTSTRAP] Binding Server callback function pointers..." << endl;
     s.setNewConnectionCallback(&ServerCallbackHandlerService::processNewConnection);
     s.setReceiveCallBack(&ServerCallbackHandlerService::processNewInput);
     s.setDisconnectCallback(&ServerCallbackHandlerService::processDisconnect);
-    
-    
+
     cout << "[NETBUS] [BOOTSTRAP] Binding Action callbacks...\n";
     MessageHandler::addCallBack("test",(MessageHandler::ActionCallBack) &testAction);
     MessageHandler::addCallBack("dump",(MessageHandler::ActionCallBack) &dumpMessageParams);
-    
-    
+    MessageHandler::addCallBack("register",(MessageHandler::ActionCallBack) &registerClient);
+
+
     cout << "[NETBUS] [BOOTSTRAP] Initializing Sockets..." << endl;
     s.init();
     cout << "[NETBUS] [BOOTSTRAP] Starting Server..." << endl;

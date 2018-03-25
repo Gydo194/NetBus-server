@@ -5,6 +5,7 @@
 #include <map>
 #include <cstring>
 #include <cstdint>
+#include "Server.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ public:
     Message(map<string,string> values);
     ~Message();
     map<string,string> params;
+    Server::Connector connector;
 private:
     
 };

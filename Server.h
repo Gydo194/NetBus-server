@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Server.h
  * Author: gydo194
  *
@@ -29,7 +29,8 @@
 #define INPUT_BUFFER_SIZE 100 //test: 100 bytes of buffer
 #define DEFAULT_PORT 9034
 
-class Server {
+class Server
+{
 public:
     Server();
     Server(int port);
@@ -42,33 +43,37 @@ public:
     void setReceiveCallBack(void (*rc)(uint16_t fd, char *buffer));
     void setDisconnectCallback(void (*dc)(uint16_t fd));
     void sendTo(uint16_t fd, void *messageBuffer);
+    struct Connector {
+        uint16_t source_fd;
+    };
+
 private:
     //fd_set file descriptor sets for use with FD_ macros
     fd_set masterfds;
     fd_set tempfds;
-    
+
     //unsigned integer to keep track of maximum fd value, required for select()
     uint16_t maxfd;
-    
+
     //socket file descriptors
     int mastersocket_fd; //master socket which receives new connections
     int tempsocket_fd; //temporary socket file descriptor which holds new clients
-    
+
     //client connection data
     struct sockaddr_storage client_addr;
     //server socket details
     struct sockaddr_in servaddr;
     //input buffer
     char input_buffer[INPUT_BUFFER_SIZE];
-    
+
     char remote_ip[INET6_ADDRSTRLEN];
     int numbytes;
-    
+
     void (*newConnectionCallback) (uint16_t fd);
     void (*receiveCallback) (uint16_t fd, char *buffer);
     void (*disconnectCallback) (uint16_t fd);
-    
-    
+
+
     //function prototypes
     void setup(int port);
     void initializeSocket();
@@ -76,11 +81,10 @@ private:
     void startListen();
     void handleNewConnection();
     void recvInputFromExisting(int fd);
-    
+
     //void *getInetAddr(struct sockaddr *saddr);
-    
+
 
 };
 
 #endif /* SERVER_H */
-

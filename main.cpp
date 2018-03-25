@@ -6,7 +6,7 @@
  */
 
 #include "Server.h"
-#include "ServerCallbackHandlerService.h"
+#include "ServerAPIHandler.h"
 #include "Commons.h" //global extern variables
 #include "SignalHandlers.h"
 #include "MessageHandler.h"
@@ -29,9 +29,9 @@ int main(int argc, char** argv)
 
 
     cout << "[NETBUS] [BOOTSTRAP] Binding Server callback function pointers..." << endl;
-    s.setNewConnectionCallback(&ServerCallbackHandlerService::processNewConnection);
-    s.setReceiveCallBack(&ServerCallbackHandlerService::processNewInput);
-    s.setDisconnectCallback(&ServerCallbackHandlerService::processDisconnect);
+    s.setNewConnectionCallback(&ServerAPIHandler::processNewConnection);
+    s.setReceiveCallBack(&ServerAPIHandler::processNewInput);
+    s.setDisconnectCallback(&ServerAPIHandler::processDisconnect);
 
     cout << "[NETBUS] [BOOTSTRAP] Binding Action callbacks...\n";
     MessageHandler::addCallBack("test",(MessageHandler::ActionCallBack) &testAction);

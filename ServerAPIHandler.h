@@ -16,15 +16,16 @@
 
 #include <cstdint>
 
-class ServerCallbackHandlerService {
+class ServerAPIHandler {
     
 public:
-    ServerCallbackHandlerService();
-    ServerCallbackHandlerService(const ServerCallbackHandlerService& orig);
-    virtual ~ServerCallbackHandlerService();
+    ServerAPIHandler();
+    ServerAPIHandler(const ServerAPIHandler& orig);
+    virtual ~ServerAPIHandler();
     static void processNewConnection(uint16_t fd);
     static void processNewInput(uint16_t fd, char *buffer);
     static void processDisconnect(uint16_t fd);
+    //static void sendMessage(Message *msg);
 private:
 
 

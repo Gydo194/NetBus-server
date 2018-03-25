@@ -25,7 +25,7 @@ public:
     static void processNewConnection(uint16_t fd);
     static void processNewInput(uint16_t fd, char *buffer);
     static void processDisconnect(uint16_t fd);
-    //static void sendMessage(Message *msg);
+    static void sendMessage(Message *msg);
 private:
 
 
